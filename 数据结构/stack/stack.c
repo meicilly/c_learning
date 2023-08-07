@@ -41,3 +41,10 @@ int stack_pop(stack_t* stack){
 int stack_size(stack_t* stack){
     return stack->top;
 }
+//取出栈顶的元素
+int stack_peek(stack_t* stack){
+    if(stack->top == 0){
+        return 0;
+    }
+    return stack->arr[stack->top -1];
+}

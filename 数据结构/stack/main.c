@@ -11,10 +11,14 @@ int main(void){
     printf("栈中的有效数据个数是:%d个\n", stack_size(&stack));
     printf("栈中的数据为:");
     //循环出栈
-    while(!stack_empty(&stack))//非空
-        printf("%d ", stack_pop(&stack));
-    printf("\n");
-    printf("栈中的有效数据个数是:%d个\n", stack_size(&stack));
+    // while(!stack_empty(&stack))//非空
+    //     printf("%d ", stack_pop(&stack));
+    // printf("\n");
+    // printf("栈中的有效数据个数是:%d个\n", stack_size(&stack));
+
+    //取出栈顶的元素
+    int peek = stack_peek(&stack);
+    printf("栈顶元素是%d",peek);
 
     //栈的内存释放
     stack_deinit(&stack);

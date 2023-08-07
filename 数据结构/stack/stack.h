@@ -16,4 +16,5 @@ extern int stack_empty(stack_t* stack);//判断空
 extern void stack_push(stack_t* stack, int data);//入栈
 extern int stack_pop(stack_t* stack);//出栈
 extern int stack_size(stack_t* stack);//栈的元素个数
+extern int stack_peek(stack_t* stack);//取出栈顶元素
 #endif
