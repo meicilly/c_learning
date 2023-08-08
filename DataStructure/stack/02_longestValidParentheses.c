@@ -1,4 +1,3 @@
-//有效括号
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -6,67 +5,69 @@
 
 typedef struct stack{
     char* arr;//栈的首地址
-    int top;//栈顶
     int cap;//栈的容量
+    int top;//栈顶
 }stack_t;
 
-//栈的初始化
 void stack_init(stack_t* stack,int cap){
-    //给栈分配首地址
     stack->arr = malloc(sizeof(char) * cap);
-    //初始化栈的容量
     stack->cap = cap;
-    //初始化top
-    stack->top = 0;
+    stack->top =0;
 }
-//栈的内存释放
 void stack_deinit(stack_t* stack){
     free(stack->arr);
     stack->cap = 0;
     stack->top = 0;
 }
-//判断栈是否为满
-int stack_full(stack_t* stack){
-    //满1
-    //非满 0
-    return stack->top == stack->cap;
+
+bool stack_full(stack_t* stack){
+    if(stack->top == stack->cap){
+        return true;
+    }
+    return false;
 }
-//判断栈是否为空
-int stack_empty(stack_t* stack){
-    return stack->top == 0;
+
+bool stack_empty(stack_t* stack){
+    if(stack->top == 0){
+        return true;
+    }
+    return false;
 }
-//定义入栈
+
 void stack_push(stack_t* stack,char data){
     stack->arr[stack->top] = data;
     stack->top++;
 }
-//定义出栈
-int stack_pop(stack_t* stack){
-    stack->top--;
-    return stack->arr[stack->top];
+
+char stack_pop(stack_t* stack){
+    if(stack->top != 0){
+        stack->top--;
+        return stack->arr[stack->top];
+    }
+    return stack->top;
 }
-//判断栈中有效数据个数的函数
+
 int stack_size(stack_t* stack){
     return stack->top;
 }
+
 //取出栈顶的元素
-int stack_peek(stack_t* stack){
+char stack_peek(stack_t* stack){
     if(stack->top == 0){
         return 0;
     }
     return stack->arr[stack->top -1];
 }
-bool isVaild(const char* s){
-    //定义栈变量
+
+
+
+int longestValid(char* s){
     stack_t stack;
-    //初始化
     stack_init(&stack,20);
+    int j = 0;
     for(int i = 0;i < strlen(s);i++){
-        //拿出栈顶元素
         char top = stack_peek(&stack);
-        printf("top的值是%c\n",top);
-        printf("第s%d的值是%c\n",i,s[i]);
-        //左括号入栈
+           //左括号入栈
         if(s[i] == '(' || s[i] == '{' || s[i] == '['){
             printf("到了入栈\n");
             stack_push(&stack,s[i]);
@@ -75,29 +76,29 @@ bool isVaild(const char* s){
         else if(s[i] == ')' && top == '(' || s[i] == ']' && top == '[' || s[i] == '}' && top == '{'){
             //出栈
             printf("到了出栈\n");
+            //添加前提条件 top != -1
             stack_pop(&stack);
+            j++;
         }
         else{
             printf("到了这\n");
             stack_push(&stack,s[i]);
         }
     }
-    //栈空为ture
-    if(stack_empty(&stack)){
-        return true;
-    }else{
-        return false;
-    }
+    return j * 2;
 }
 
 int main(void){
-    const char* s = "{}";
-    //char* s[] = "{}";
-    if(isVaild(s)){
-        printf("括号匹配有效！\n");
-    }else{
-        printf("括号无效匹配有效！\n");
-    }
-    //printf("%d",&s);
+    // stack_t stack;
+    // stact_init(&stack,20);
+    char data[] = "{{[]}}}}{}";
+    char* s = data;
+    int a = longestValid(s);
+    printf("%d",a);
+    // for(int i = 0;i < strlen(s);i++){
+    //     stack_push(&stack,s[i]);
+    //     printf("栈中的有效数据个数是:%d个\n", stack_size(&stack));
+    // }
+    // stact_deinit(&stack);
     return 0;
 }
